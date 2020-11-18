@@ -18,7 +18,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 /**
  * Created by k.grigorchuk on 27.02.2017.
  */
-public class MyFirstTest {
+public class MyFirstTest extends TestBase{
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -26,9 +26,9 @@ public class MyFirstTest {
 
     @Before
     public void start(){
-        System.setProperty("webdriver.chrome.driver", "C:\\workspace\\chromedriver.exe");
+        //System.setProperty("webdriver.chrome.driver", "C:\\workspace\\chromedriver.exe");
         driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        //wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
