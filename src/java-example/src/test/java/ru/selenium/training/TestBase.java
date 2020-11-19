@@ -1,21 +1,18 @@
-package ru.selenium.training;
+/*package ru.selenium.training;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
-import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
-public class  TestBase {
+
+public class TestBase {
+
     public WebDriver driver;
     public WebDriverWait wait;
-
 
     @Before
     public void start(){
@@ -24,22 +21,40 @@ public class  TestBase {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-
-    public  boolean isElementPresent(By locator){
-        try {
-            wait.until((WebDriver d) -> d.findElement(locator));// ВОТ ТУТ НПЕ!!
-            //driver.findElement(locator);
-            return true;
-        }
-        catch (NoSuchElementException e) {
-            return false;
-        }
+    boolean areElementsPresent(By locator, int time) {
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        boolean a = driver.findElements(locator).size() > 0;
+        driver.manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
+        return a;
     }
 
+
+
+
+    //public boolean isElementPresent (By locator){
+       // try {
+         //   wait.until((WebDriver d) -> d.findElement(locator) );
+            //driver.findElement(locator);
+        //    return true;
+        //} catch (TimeoutException ex) {
+         //   return false;
+        //}
+       // catch (NullPointerException ex) {
+       //     return false;
+       // }
+    //}
+
+    boolean areElementsPresent(By locator) {
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        return driver.findElements(locator).size() > 0;
+    }
 
     @After
-    public void stop(){
+    public void Stop(){
         driver.quit();
+        //WebDriverUtils.killDrivers();
         driver = null;
     }
+
 }
+*/

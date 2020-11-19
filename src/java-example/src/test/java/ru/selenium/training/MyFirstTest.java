@@ -18,7 +18,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 /**
  * Created by k.grigorchuk on 27.02.2017.
  */
-public class MyFirstTest extends TestBase{
+public class MyFirstTest {
 
     private WebDriver driver;
     private WebDriverWait wait;
