@@ -16,39 +16,36 @@ import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
-/**
- * Created by k.grigorchuk on 27.02.2017.
- */
-public class LeftPanel {
+public class LeftPanel{
 
     private WebDriver driver;
     private WebDriverWait wait;
 
 
     @Before
-    public void start(){
+    public void start() {
         //System.setProperty("webdriver.chrome.driver", "C:\\workspace\\chromedriver.exe");
         driver = new ChromeDriver();
         //wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-    //isElementPresent method here
-    public boolean isElementPresent (By locator){
+    //isElementPresent method
+    public boolean isElementPresent(By locator) {
         try {
-            wait.until((WebDriver d) -> d.findElement(locator) );
+            wait.until((WebDriver d) -> d.findElement(locator));
             //driver.findElement(locator);
             return true;
         } catch (TimeoutException ex) {
             return false;
-        }
-        catch (NullPointerException ex) {
+        } catch (NullPointerException ex) {
             return false;
         }
     }
 
-    //login method here
+    //login method
     public void login() {
+
         driver.get("http://localhost:8080/litecart/admin/login.php");
         driver.findElement(By.name("username")).sendKeys("admin");
         driver.findElement(By.name("password")).sendKeys("admin");
@@ -59,7 +56,9 @@ public class LeftPanel {
         Assert.assertEquals(actualTitle, expectedTitle);
     }
 
+
     @Test
+    //clicking through items of left navigation panel
     public void leftPanelNavigation() {
 
         login();
@@ -67,7 +66,7 @@ public class LeftPanel {
         WebElement panel = driver.findElement(By.xpath("//*[@id='box-apps-menu']"));//заменить звездочку на тэг
         List<WebElement> panelsList = panel.findElements(By.xpath("./li"));
 
-        System.out.println("number of parent panels:" + "" +panelsList.size());
+        System.out.println("number of parent panels:" + "" + panelsList.size());
 
         for (int i = 1; i < panelsList.size(); i++) {
             driver.findElement(By.xpath("//*[@id='box-apps-menu']/li[" + i + "]")).click();
@@ -85,9 +84,8 @@ public class LeftPanel {
     }
 
 
-
     @After
-    public void stop(){
+    public void stop() {
         driver.quit();
         driver = null;
     }
