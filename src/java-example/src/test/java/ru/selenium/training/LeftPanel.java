@@ -62,25 +62,27 @@ public class LeftPanel{
     public void leftPanelNavigation() {
 
         login();
-
+        Assert.assertTrue(isElementPresent(By.xpath("//*[@id='box-apps-menu']")));
         WebElement panel = driver.findElement(By.xpath("//*[@id='box-apps-menu']"));//заменить звездочку на тэг
-        List<WebElement> panelsList = panel.findElements(By.xpath("./li"));
+        int numberOfPanels = panel.findElements(By.xpath("./li")).size();// кол-во тэгов ли на стр
 
-        System.out.println("number of parent panels:" + "" + panelsList.size());
+        System.out.println("number of parent panels: " + numberOfPanels);
 
-        for (int i = 1; i < panelsList.size(); i++) {
+        for (int i = 1; i < numberOfPanels; i++) {
             driver.findElement(By.xpath("//*[@id='box-apps-menu']/li[" + i + "]")).click();
+            System.out.println("opened panel:" + "" + driver.findElement(By.xpath("//*[@id='box-apps-menu']/li[" + i + "]")).getText());
+            int numberOfSubPanels = driver.findElements(By.xpath("//li[contains(@class,'doc')]")).size();
 
 
-            List<WebElement> subPanelList = driver.findElements(By.xpath("//*[@id='box-apps-menu']//ul/li"));
+            if (numberOfSubPanels > 0) {
+                for (int j=1; j< numberOfSubPanels; j++){
+                    driver.findElement(By.xpath("//li[contains(@class,'doc')][" + j + "]")).click();
+                    System.out.println("opened panel:" + "" + driver.findElement(By.xpath("//li[contains(@class,'doc')][" + j + "]")).getText());
 
-            for (int j = 1; j < subPanelList.size(); j++) {
-                driver.findElement(By.xpath("//*[@id='box-apps-menu']//ul/li[" + j + "]")).click();
-
-                System.out.println("opened panel:" + "" + driver.getCurrentUrl());
+                }
             }
-
         }
+
     }
 
 
