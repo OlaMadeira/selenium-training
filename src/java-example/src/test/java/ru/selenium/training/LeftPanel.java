@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
-public class LeftPanel{
+public class LeftPanel {
 
     private WebDriver driver;
     private WebDriverWait wait;
@@ -26,8 +26,8 @@ public class LeftPanel{
     public void start() {
         //System.setProperty("webdriver.chrome.driver", "C:\\workspace\\chromedriver.exe");
         driver = new ChromeDriver();
-        //wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        wait = new WebDriverWait(driver, 10);
+        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     //isElementPresent method
@@ -50,10 +50,7 @@ public class LeftPanel{
         driver.findElement(By.name("username")).sendKeys("admin");
         driver.findElement(By.name("password")).sendKeys("admin");
         driver.findElement(By.name("login")).submit();
-        //Assert.assertTrue(isElementPresent(By.xpath("//*[@id='box-apps-menu']"))); //падает AssertionError
-        String actualTitle = driver.getTitle();
-        String expectedTitle = "My Store";
-        Assert.assertEquals(actualTitle, expectedTitle);
+
     }
 
 
@@ -70,14 +67,14 @@ public class LeftPanel{
 
         for (int i = 1; i < numberOfPanels; i++) {
             driver.findElement(By.xpath("//*[@id='box-apps-menu']/li[" + i + "]")).click();
-            System.out.println("opened panel:" + "" + driver.findElement(By.xpath("//*[@id='box-apps-menu']/li[" + i + "]")).getText());
+            System.out.println("opened panel: " + driver.findElement(By.xpath("//*[@id='box-apps-menu']/li[" + i + "]")).getText());
             int numberOfSubPanels = driver.findElements(By.xpath("//li[contains(@class,'doc')]")).size();
 
 
             if (numberOfSubPanels > 0) {
-                for (int j=1; j< numberOfSubPanels; j++){
+                for (int j = 1; j < numberOfSubPanels; j++) {
                     driver.findElement(By.xpath("//li[contains(@class,'doc')][" + j + "]")).click();
-                    System.out.println("opened panel:" + "" + driver.findElement(By.xpath("//li[contains(@class,'doc')][" + j + "]")).getText());
+                    System.out.println("opened panel:" + driver.findElement(By.xpath("//li[contains(@class,'doc')][" + j + "]")).getText());
 
                 }
             }
