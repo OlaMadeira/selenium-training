@@ -11,11 +11,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
-
 public class LeftPanel {
 
     private WebDriver driver;
@@ -28,6 +23,36 @@ public class LeftPanel {
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, 10);
         //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
+
+
+    @Test
+    //clicking through items of left navigation panel
+    public void leftPanelNavigation() {
+
+        login();
+        Assert.assertTrue(isElementPresent(By.xpath("//*[@id='box-apps-menu']")));
+        WebElement panel = driver.findElement(By.xpath("//*[@id='box-apps-menu']"));//заменить звездочку на тэг
+        int numberOfPanels = panel.findElements(By.xpath("./li")).size();// кол-во тэгов ли на стр
+
+
+        for (int i = 1; i < numberOfPanels; i++) {
+
+            driver.findElement(By.xpath("//*[@id='box-apps-menu']/li[" + i + "]")).click();
+            Assert.assertTrue(isElementPresent(By.xpath("//div[@class='panel-heading']")));
+            textSelector();
+
+            int numberOfSubPanels = driver.findElements(By.xpath("//li[contains(@class,'doc')]")).size();
+
+            if (numberOfSubPanels > 0) {
+                for (int j = 1; j < numberOfSubPanels; j++) {
+                    driver.findElement(By.xpath("//li[contains(@class,'doc')][" + j + "]")).click();
+                     textSelector();
+
+                }
+            }
+        }
+
     }
 
     //isElementPresent method
@@ -52,33 +77,12 @@ public class LeftPanel {
         driver.findElement(By.name("login")).submit();
 
     }
+    //text selector method
+    public void textSelector(){
 
-
-    @Test
-    //clicking through items of left navigation panel
-    public void leftPanelNavigation() {
-
-        login();
-        Assert.assertTrue(isElementPresent(By.xpath("//*[@id='box-apps-menu']")));
-        WebElement panel = driver.findElement(By.xpath("//*[@id='box-apps-menu']"));//заменить звездочку на тэг
-        int numberOfPanels = panel.findElements(By.xpath("./li")).size();// кол-во тэгов ли на стр
-
-        System.out.println("number of parent panels: " + numberOfPanels);
-
-        for (int i = 1; i < numberOfPanels; i++) {
-            driver.findElement(By.xpath("//*[@id='box-apps-menu']/li[" + i + "]")).click();
-            System.out.println("opened panel: " + driver.findElement(By.xpath("//*[@id='box-apps-menu']/li[" + i + "]")).getText());
-            int numberOfSubPanels = driver.findElements(By.xpath("//li[contains(@class,'doc')]")).size();
-
-
-            if (numberOfSubPanels > 0) {
-                for (int j = 1; j < numberOfSubPanels; j++) {
-                    driver.findElement(By.xpath("//li[contains(@class,'doc')][" + j + "]")).click();
-                    System.out.println("opened panel:" + driver.findElement(By.xpath("//li[contains(@class,'doc')][" + j + "]")).getText());
-
-                }
-            }
-        }
+        WebElement textPanel = driver.findElement(By.xpath("//div[@class='panel-heading']"));
+        String text = textPanel.getText();
+        System.out.println(text);
 
     }
 

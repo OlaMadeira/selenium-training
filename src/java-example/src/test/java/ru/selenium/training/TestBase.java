@@ -1,4 +1,4 @@
-/*package ru.selenium.training;
+/* package ru.selenium.training;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,8 +17,8 @@ public class TestBase {
     @Before
     public void start(){
         driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, 10);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        wait = new WebDriverWait(driver, 2);
+        //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     boolean areElementsPresent(By locator, int time) {
@@ -31,18 +31,15 @@ public class TestBase {
 
 
 
-    //public boolean isElementPresent (By locator){
-       // try {
-         //   wait.until((WebDriver d) -> d.findElement(locator) );
+    public boolean isElementPresent (By locator){
+        try {
+            wait.until( d-> d.findElement(locator) );
             //driver.findElement(locator);
-        //    return true;
-        //} catch (TimeoutException ex) {
-         //   return false;
-        //}
-       // catch (NullPointerException ex) {
-       //     return false;
-       // }
-    //}
+            return true;
+        } catch (TimeoutException ex) {
+            return false;
+        }
+    }
 
     boolean areElementsPresent(By locator) {
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
