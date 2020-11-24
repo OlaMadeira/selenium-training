@@ -4,12 +4,12 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
+import java.util.stream.IntStream;
 
 public class LeftPanel {
 
@@ -18,7 +18,7 @@ public class LeftPanel {
 
 
     @Before
-    public void start() {
+    public void start(){
         //System.setProperty("webdriver.chrome.driver", "C:\\workspace\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
@@ -33,8 +33,8 @@ public class LeftPanel {
 
         login();
         Assert.assertTrue(isElementPresent(By.xpath("//div[@id='sidebar']//ul[@id='box-apps-menu']")));
-        WebElement panel = driver.findElement(By.xpath("//div[@id='sidebar']//ul[@id='box-apps-menu']"));//заменить звездочку на тэг
-        int numberOfPanels = panel.findElements(By.xpath("./li")).size();// кол-во тэгов ли на стр
+        WebElement panel = driver.findElement(By.xpath("//div[@id='sidebar']//ul[@id='box-apps-menu']"));
+        int numberOfPanels = panel.findElements(By.xpath("./li")).size();// кол-во панелей на стр
 
 
         for (int i = 1; i <= numberOfPanels; i++) {
@@ -46,11 +46,10 @@ public class LeftPanel {
             int numberOfSubPanels = driver.findElements(By.xpath("//li[contains(@class,'doc')]")).size();
 
             if (numberOfSubPanels > 0) {
-                for (int j = 1; j < numberOfSubPanels +1; j++) {
+                for (int j = 1; j <= numberOfSubPanels; j++) {
                     driver.findElement(By.xpath("//li[contains(@class,'doc')][" + j + "]")).click();
-                     textSelector();
-
-                }
+                    textSelector();
+                };
             }
         }
 
@@ -86,6 +85,7 @@ public class LeftPanel {
         System.out.println(text);
 
     }
+
 
 
     @After
