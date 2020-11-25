@@ -17,7 +17,8 @@ public class TestBase {
     @Before
     public void start(){
         driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, 2);
+        driver.manage().window().maximize();
+        wait = new WebDriverWait(driver, 10);
         //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
@@ -27,8 +28,6 @@ public class TestBase {
         driver.manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
         return a;
     }
-
-
 
 
     public boolean isElementPresent (By locator){
@@ -44,6 +43,16 @@ public class TestBase {
     boolean areElementsPresent(By locator) {
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         return driver.findElements(locator).size() > 0;
+    }
+
+    //login method
+    public void login() {
+
+        driver.get("http://localhost:8080/litecart/admin/login.php");
+        driver.findElement(By.name("username")).sendKeys("admin");
+        driver.findElement(By.name("password")).sendKeys("admin");
+        driver.findElement(By.name("login")).submit();
+
     }
 
     @After
