@@ -1,4 +1,4 @@
-/* package ru.selenium.training;
+package ru.selenium.training;
 
 import org.junit.After;
 import org.junit.Before;
@@ -54,4 +54,3 @@ public class TestBase {
     }
 
 }
-*/

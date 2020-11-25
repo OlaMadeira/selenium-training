@@ -18,7 +18,7 @@ public class LeftPanel {
 
 
     @Before
-    public void start(){
+    public void start() {
         //System.setProperty("webdriver.chrome.driver", "C:\\workspace\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().window().maximize();
@@ -35,21 +35,31 @@ public class LeftPanel {
         Assert.assertTrue(isElementPresent(By.xpath("//div[@id='sidebar']//ul[@id='box-apps-menu']")));
         WebElement panel = driver.findElement(By.xpath("//div[@id='sidebar']//ul[@id='box-apps-menu']"));
         int numberOfPanels = panel.findElements(By.xpath("./li")).size();// кол-во панелей на стр
+        System.out.println("number of parent panels: " + numberOfPanels);
 
 
-        for (int i = 1; i <= numberOfPanels; i++) {
+        for (int i = 0; i < numberOfPanels; i++) {
 
-            driver.findElement(By.xpath("//div[@id='sidebar']//ul[@id='box-apps-menu']/li[" + i + "]")).click();
+            WebElement currentPanel = driver.findElements(By.xpath("//div[@id='sidebar']//ul[@id='box-apps-menu']/li")).get(i);
+            System.out.println("current panel is "+ currentPanel.getText());
+            currentPanel.click();
+            //driver.findElements(By.xpath("//div[@id='sidebar']//ul[@id='box-apps-menu']/li")).get(i).click();
             Assert.assertTrue(isElementPresent(By.xpath("//div[@class='panel-heading']")));
             textSelector();
 
             int numberOfSubPanels = driver.findElements(By.xpath("//li[contains(@class,'doc')]")).size();
+            System.out.println("number of subpanels: " + numberOfSubPanels);
 
             if (numberOfSubPanels > 0) {
-                for (int j = 1; j <= numberOfSubPanels; j++) {
-                    driver.findElement(By.xpath("//li[contains(@class,'doc')][" + j + "]")).click();
+                for (int j =0; j < numberOfSubPanels; j++) {
+
+                    WebElement currentSubpanel = driver.findElements(By.xpath("//li[contains(@class,'doc')]")).get(j);
+                    System.out.println("current sub panel is " + currentSubpanel.getText());
+                    currentSubpanel.click();
+                    Assert.assertTrue(isElementPresent(By.xpath("//div[@class='panel-heading']")));
                     textSelector();
-                };
+                }
+
             }
         }
 
@@ -77,15 +87,15 @@ public class LeftPanel {
         driver.findElement(By.name("login")).submit();
 
     }
+
     //text selector method
-    public void textSelector(){
+    public void textSelector() {
 
         WebElement textPanel = driver.findElement(By.xpath("//div[@class='panel-heading']"));
         String text = textPanel.getText();
-        System.out.println(text);
+        System.out.println("current header is: "+ text);
 
     }
-
 
 
     @After
