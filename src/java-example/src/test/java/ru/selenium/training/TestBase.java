@@ -30,7 +30,8 @@ public class TestBase {
     }
 
 
-    public boolean isElementPresent (By locator){
+    public boolean
+    isElementPresent (By locator){
         try {
             wait.until( d-> d.findElement(locator) );
             //driver.findElement(locator);

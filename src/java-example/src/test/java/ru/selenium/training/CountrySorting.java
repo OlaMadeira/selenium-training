@@ -13,21 +13,19 @@ public class CountrySorting extends TestBase {
     public void sortCountries() {
         final String leftBox = "//div[@id='sidebar']//ul[@id='box-apps-menu']";
         final String table = "//main[@id='main']//div[@id='content']//table[@class='table table-striped table-hover data-table']";
+        final String tableRows = "//main[@id='main']//div[@id='content']//table[@class='table table-striped table-hover data-table']/tbody/tr";
+
 
         login();
         Assert.assertTrue(isElementPresent(By.xpath(leftBox)));
-        WebElement countriesPanel = driver.findElement(By.xpath(leftBox + "//a[contains(@href, 'countries')]"));
-        countriesPanel.click();
+        driver.findElement(By.xpath(leftBox + "//a[contains(@href, 'countries')]")).click();
         System.out.println("Countries page is opened");
 
-        Assert.assertTrue(isElementPresent(By.xpath(table+"//tr")));
-        System.out.println("Table has been loaded");
+        //Assert.assertTrue(isElementPresent(By.xpath(table + "/tfoot[contains(.,'Countries: 2')]")));
 
-        WebElement countriesTable = driver.findElement(By.xpath(table));
-        Assert.assertTrue(areElementsPresent(By.xpath(table + "//tbody//tr")));
-        List<WebElement> tableRows = countriesTable.findElements(By.xpath(".//tbody//tr"));
-        int numberOfRows = tableRows.size();
-        System.out.println(numberOfRows);
+        int numberOfRows = driver.findElements(By.xpath(tableRows)).size();
+        System.out.println("number of rows = " + numberOfRows);
+
 
         //List<WebElement> zonesCells = driver.findElements(By.xpath(table + "//tr//td[6]"));
         //System.out.println(zonesCells.size());
