@@ -47,7 +47,7 @@ public class LeftPanel extends TestBase {
         }
     }
 
-    //text selector method
+    //method extracting the text of the opened panel header
     public void textSelector() {
 
         WebElement textPanel = driver.findElement(By.xpath("//div[@class='panel-heading']"));
