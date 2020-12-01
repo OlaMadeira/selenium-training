@@ -7,28 +7,29 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
+import static org.openqa.selenium.By.xpath;
+
 public class CountrySorting extends TestBase {
 
     @Test
     public void sortCountries() {
-        final String leftBox = "//div[@id='sidebar']//ul[@id='box-apps-menu']";
-        final String table = "//main[@id='main']//div[@id='content']//table[@class='table table-striped table-hover data-table']";
-        final String tableRows = "//main[@id='main']//div[@id='content']//table[@class='table table-striped table-hover data-table']/tbody/tr";
+        //variables used
+        final By leftBox = xpath("//div[@id='sidebar']//ul[@id='box-apps-menu']");
+        final By countriesButton = xpath("//div[@id='sidebar']//ul[@id='box-apps-menu']//a[contains(@href, 'countries')]");
+        final By nameColumn = xpath("//div[@class='panel-body']//tbody//tr//td[5]/a");
+        final By tableRows = xpath("//main[@id='main']//div[@id='content']//table[@class='table table-striped table-hover data-table']/tbody/tr");
 
-
-        login();
-        Assert.assertTrue(isElementPresent(By.xpath(leftBox)));
-        driver.findElement(By.xpath(leftBox + "//a[contains(@href, 'countries')]")).click();
+        //logic itself
+        login("admin", "admin");
+        Assert.assertEquals(true, isElementPresent(leftBox));
+        driver.findElement(countriesButton).click();
         System.out.println("Countries page is opened");
 
-        //Assert.assertTrue(isElementPresent(By.xpath(table + "/tfoot[contains(.,'Countries: 2')]")));
+       //assertTrue(isElementPresent(nameColumn));
+        List<WebElement> countries = driver.findElements(nameColumn);
+        int countriesNo = countries.size();
+        System.out.println(countriesNo);
 
-        int numberOfRows = driver.findElements(By.xpath(tableRows)).size();
-        System.out.println("number of rows = " + numberOfRows);
-
-
-        //List<WebElement> zonesCells = driver.findElements(By.xpath(table + "//tr//td[6]"));
-        //System.out.println(zonesCells.size());
 
     }
 

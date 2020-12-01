@@ -1,12 +1,9 @@
 package ru.selenium.training;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class LeftPanel extends TestBase {
 
@@ -14,7 +11,7 @@ public class LeftPanel extends TestBase {
     //clicking through items of left navigation panel
     public void leftPanelNavigation() {
 
-        login();
+        login("admin", "admin");
         Assert.assertTrue(isElementPresent(By.xpath("//div[@id='sidebar']//ul[@id='box-apps-menu']")));
         Assert.assertTrue(isElementPresent(By.xpath("//div[@id='sidebar']//ul[@id='box-apps-menu']//span[contains(., 'Appearance')]")));
         WebElement panel = driver.findElement(By.xpath("//div[@id='sidebar']//ul[@id='box-apps-menu']"));

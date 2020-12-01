@@ -47,11 +47,11 @@ public class TestBase {
     }
 
     //login method
-    public void login() {
+    public void login(String username, String password) {
 
         driver.get("http://localhost:8080/litecart/admin/login.php");
-        driver.findElement(By.name("username")).sendKeys("admin");
-        driver.findElement(By.name("password")).sendKeys("admin");
+        driver.findElement(By.name("username")).sendKeys(username);
+        driver.findElement(By.name("password")).sendKeys(password);
         driver.findElement(By.name("login")).submit();
 
     }
