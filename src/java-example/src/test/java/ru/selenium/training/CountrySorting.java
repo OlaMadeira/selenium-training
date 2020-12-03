@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.Iterator;
 import java.util.List;
 
 import static org.openqa.selenium.By.xpath;
@@ -21,15 +22,22 @@ public class CountrySorting extends TestBase {
 
         //logic itself
         login("admin", "admin");
-        Assert.assertEquals(true, isElementPresent(leftBox));
+        Assert.assertEquals(true,isElementPresent(leftBox));
         driver.findElement(countriesButton).click();
         System.out.println("Countries page is opened");
 
-       //assertTrue(isElementPresent(nameColumn));
+        //got countries list
+        Assert.assertEquals(true,isElementPresent(nameColumn));
         List<WebElement> countries = driver.findElements(nameColumn);
         int countriesNo = countries.size();
         System.out.println(countriesNo);
 
+        Iterator<WebElement> iterator = countries.iterator();
+
+        while(iterator.hasNext()){
+
+            System.out.println(iterator.next());
+        }
 
     }
 
