@@ -22,24 +22,39 @@ public class CountrySorting extends TestBase {
 
         //logic itself
         login("admin", "admin");
-        Assert.assertEquals(true,isElementPresent(leftBox));
-        driver.findElement(countriesButton).click();
-        System.out.println("Countries page is opened");
+        Assert.assertEquals(true, isElementPresent(leftBox));
+        //driver.findElement(countriesButton).click();
+        //System.out.println("Countries page is opened");
 
         //got countries list
-        Assert.assertEquals(true,isElementPresent(nameColumn));
+        driver.get("http://localhost:8080/litecart/admin/?app=countries&doc=countries");
+        Assert.assertTrue(isElementPresent(nameColumn));
         List<WebElement> countries = driver.findElements(nameColumn);
-        int countriesNo = countries.size();
-        System.out.println(countriesNo);
+        System.out.println(countries.size());
 
         Iterator<WebElement> iterator = countries.iterator();
 
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
 
-            System.out.println(iterator.next());
+            WebElement element = iterator.next();
+
+            String element1 = element.getAttribute("innerHTML");
+
+            if (!iterator.hasNext()) {
+
+                System.out.println("No pair for element " + element1);
+                break;
+            }
+
+            String element2 = iterator.next().getAttribute("innerHTML");
+
+            if (element1.compareTo(element2) < 0) {
+                System.out.println("Compare element 1 " + element1 + " to element 2 " + element2 + " Result is - correct sorting ");
+            }
+            else {
+                System.out.println("Sorting is wrong");
+            }
         }
 
     }
-
-
 }
