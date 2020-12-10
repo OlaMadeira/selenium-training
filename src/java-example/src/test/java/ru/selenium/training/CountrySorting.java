@@ -15,24 +15,24 @@ public class CountrySorting extends TestBase {
     //variables used
     final By leftBox = xpath("//div[@id='sidebar']//ul[@id='box-apps-menu']");
     final By countriesButton = xpath("//div[@id='sidebar']//ul[@id='box-apps-menu']//a[contains(@href, 'countries')]");
-    final By nameColumn = xpath("//div[@class='panel-body']//tbody//tr//td[5]/a");
+    final By countryNames = xpath("//div[@class='panel-body']//tbody//tr//td[5]/a");
     final By zoneCell = xpath("//div[@id='content']//table[@class='table table-striped table-hover data-table']/tbody//tr/td[6]");
 
     @Test
     public void sortCountries() {
 
         login("admin", "admin");
-        Assert.assertEquals(true, isElementPresent(leftBox));
-        //driver.findElement(countriesButton).click();
-        //System.out.println("Countries page is opened");
+        Assert.assertTrue(isElementPresent(leftBox));
+        Assert.assertTrue(isElementPresent(countriesButton));
+        driver.findElement(countriesButton).click();
+        System.out.println("Countries page is opened");
 
-        //got countries list
-        driver.get("http://localhost:8080/litecart/admin/?app=countries&doc=countries");
-        Assert.assertTrue(isElementPresent(nameColumn));
-        List<WebElement> countries = driver.findElements(nameColumn);
-        System.out.println(countries.size());
+        Assert.assertTrue(isElementPresent(By.xpath("//div[@class='panel-body']")));
+        Assert.assertTrue(isElementPresent(By.xpath("//div[@class='panel-body']//tbody//tr//td[5]/a")));
+        List<WebElement> countries = driver.findElements(countryNames);
+        System.out.println("Countries available: " + countries.size());
 
-        Iterator<WebElement> iterator = countries.iterator();
+        Iterator<WebElement> iterator = countries.iterator();//iterator
 
         while (iterator.hasNext()) {
 
@@ -49,7 +49,7 @@ public class CountrySorting extends TestBase {
             String element2 = iterator.next().getText();
 
             if (element1.compareTo(element2) < 0) {
-                System.out.println("Compare element 1 " + element1 + " to element 2 " + element2 + " Result is - correct sorting ");
+                System.out.println("Compared element 1 " + element1 + " to element 2 " + element2 + " Result is - correct sorting ");
             } else {
                 System.out.println("Sorting is wrong");
 
@@ -57,23 +57,22 @@ public class CountrySorting extends TestBase {
         }
 
     }
-
+    /*
     @Test
     public void sortZones() {
         login("admin", "admin");
         Assert.assertEquals(true, isElementPresent(leftBox));
         driver.get("http://localhost:8080/litecart/admin/?app=countries&doc=countries");
 
-        Assert.assertTrue(isElementPresent(zoneCell));
+        Assert.assertTrue(areElementsPresent(zoneCell));
         List<WebElement> zoneNumber = driver.findElements(zoneCell);
-        String zoneNumberText = zoneNumber.toString();
 
-        List<WebElement> countries = driver.findElements(nameColumn);
+        List<WebElement> countries = driver.findElements(countryNames);
         Iterator<WebElement> iterator2 = countries.iterator();
 
         while (iterator2.hasNext()) {
 
-            if (!"0".equals(zoneNumberText)) {
+            if (!"0".equals(0)) {
 
                 System.out.println(zoneNumber);
                 driver.findElement(countriesButton).click();
@@ -83,5 +82,5 @@ public class CountrySorting extends TestBase {
             else System.out.println("Only 0 available");
         }
 
-    }
+    } */
 }

@@ -23,7 +23,7 @@ public class TestBase {
     }
 
     boolean areElementsPresent(By locator, int time) {
-        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         boolean a = driver.findElements(locator).size() > 0;
         driver.manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
         return a;
@@ -42,7 +42,7 @@ public class TestBase {
     }
 
     boolean areElementsPresent(By locator) {
-        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         return driver.findElements(locator).size() > 0;
     }
 
