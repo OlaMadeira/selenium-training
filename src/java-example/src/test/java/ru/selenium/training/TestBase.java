@@ -56,6 +56,47 @@ public class TestBase {
 
     }
 
+    //wait for the page to load
+    public void waitForPageToLoad() {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        int timeWaitedInMilliseconds = 0;
+        int maxWaitTimeInMilliseconds = 2000;
+
+        while (timeWaitedInMilliseconds < maxWaitTimeInMilliseconds) {
+            if (js.executeScript("return document.readyState").equals("interactive")) {
+                System.out.println("Waited interactive: " + timeWaitedInMilliseconds);
+                break;
+            }
+            waitElementsReload(100);
+            timeWaitedInMilliseconds += 100;
+        }
+
+        timeWaitedInMilliseconds = 0;
+        while (!js.executeScript("return document.readyState").equals("complete")) {
+            //System.out.println("waiting !!!!");
+            waitElementsReload(500);
+            timeWaitedInMilliseconds += 500;
+            if (timeWaitedInMilliseconds == 10000) {
+                break;
+            }
+        }
+    }
+
+
+    /**
+     * thread sleep
+     *
+     * @param ms time in milliseconds
+     */
+    protected void waitElementsReload(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("error"+ e);
+        }
+    }
+
+
     @After
     public void Stop(){
         driver.quit();
