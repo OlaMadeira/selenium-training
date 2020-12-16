@@ -133,7 +133,7 @@ public class ElementAttributes extends TestBase {
             String size2 = driver.findElement(newPriceOnHomePage).getCssValue("font-size");
             String s2 = size2.replace("px", "");
             double s22 = Double.parseDouble(s2);
-            System.out.println("--> old price text size is: " + s22);
+            System.out.println("--> new price text size is: " + s22);
 
             if (s11 < s22){
                 System.out.println("->> old price font is smaller than new price font");
