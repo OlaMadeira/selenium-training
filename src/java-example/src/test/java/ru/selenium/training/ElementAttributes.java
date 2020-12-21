@@ -1,16 +1,8 @@
 package ru.selenium.training;
 
-import com.sun.javafx.css.converters.ColorConverter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.Color;
-
-import javax.swing.*;
-import java.util.List;
-
-import static java.lang.Double.parseDouble;
 import static org.openqa.selenium.By.xpath;
 
 public class ElementAttributes extends TestBase {
@@ -79,68 +71,130 @@ public class ElementAttributes extends TestBase {
     }
 
     @Test
-    public void checkPriceValues() {
-        //starting the test
+    public void checkPriceValuesHomePage() {
         driver.get("http://localhost:8080/litecart/");
         Assert.assertTrue(isElementPresent(campaignProductsSection));
 
         int numberOfProducts = driver.findElements(campaignProductXpath).size();
         System.out.println("The number of campaign products atm is: " + numberOfProducts);
 
-        System.out.println("Checking price text styles on the home page:");
+        //Checking styles on the home page
+        System.out.println("Checking price text styles on the home page >>");
         for (int i = 0; i < numberOfProducts; i++) {
 
             //old price
+            System.out.println("Details of the old price: ");
             String color1 = driver.findElement(oldPriceOnHomePage).getCssValue("color");
-            String[] numbers = color1.replace("rgba(", "").replace(")", "").split(",");
-            int r = Integer.parseInt(numbers[0].trim());
-            int g = Integer.parseInt(numbers[1].trim());
-            int b = Integer.parseInt(numbers[2].trim());
-            System.out.println("--> old price color rgba code is:" + color1 + "; " +
-                    "its parsed code is: " + "r=" + r + "; " + "g=" + g + " ;" + "b=" + b);
-
-            if (r <= 51 || r >= 0 || b >= 0 || b <= 120) {
-                System.out.println("--> old price color is black");
-            } else {
-                System.out.println("--> old price color is not black");
-            }
+            colorConverter(color1);
 
             String decoration1 = driver.findElement(oldPriceOnHomePage).getCssValue("text-decoration-line");
-            System.out.println("--> old price text style: old price is marked with: " + decoration1);
+            System.out.println("--> text style: " + decoration1);
 
             String size1 = driver.findElement(oldPriceOnHomePage).getCssValue("font-size");
-            String s1 = size1.replace("px", "");
-            double s11 = Double.parseDouble(s1);
-            System.out.println("--> old price text size is: " + s11);
-
+            double sizeInPX1 = fontSizeToDouble(size1);
 
             //new price
+            System.out.println("Details of the new price:");
             String color2 = driver.findElement(newPriceOnHomePage).getCssValue("color");
-            String[] numbers2 = color2.replace("rgba(", "").replace(")", "").split(",");
-            int r2 = Integer.parseInt(numbers2[0].trim());
-            int g2 = Integer.parseInt(numbers2[1].trim());
-            int b2 = Integer.parseInt(numbers2[2].trim());
-            System.out.println("--> new price color rgba code is:" + color2 + "; " +
-                    "its parsed code is: " + "r=" + r2 + "; " + "g=" + g2 + " ;" + "b=" + b2);
-            if (b2 <= 105 || b2 >= 0 || g2 >= 0 || g2 <= 38) {
-                System.out.println("--> new price color is red");
-            } else {
-                System.out.println("--> new price color is not red");
-            }
+            colorConverter(color2);
+
             String decoration2 = driver.findElement(newPriceOnHomePage).getCssValue("font-weight");
-            System.out.println("--> new price text style: new price is written in : " + decoration2);
+            boldFonts(decoration2);
 
             String size2 = driver.findElement(newPriceOnHomePage).getCssValue("font-size");
-            String s2 = size2.replace("px", "");
-            double s22 = Double.parseDouble(s2);
-            System.out.println("--> new price text size is: " + s22);
+            double sizeInPX2 = fontSizeToDouble(size2);
 
-            if (s11 < s22){
+            //comparing text sizes
+            if (sizeInPX1 < sizeInPX2) {
                 System.out.println("->> old price font is smaller than new price font");
             } else {
                 System.out.println("->> old price font is bigger than new price font");
             }
 
         }
+
+    }
+
+    @Test
+    public void checkPriceValuesDetailedPage() {
+        driver.get("http://localhost:8080/litecart/");
+        Assert.assertTrue(isElementPresent(campaignProductsSection));
+
+        int numberOfProducts = driver.findElements(campaignProductXpath).size();
+        System.out.println("The number of campaign products atm is: " + numberOfProducts);
+
+        System.out.println("Checking price text styles on the product details page >>");
+        for (int i = 0; i < numberOfProducts; i++) {
+            driver.findElement(campaignProductXpath).click();
+
+            System.out.println("Details of the old price: ");
+            //old price
+            String color3 = driver.findElement(oldPriceOnDetailsPage).getCssValue("color");
+            colorConverter(color3);
+
+            String decoration3 = driver.findElement(oldPriceOnDetailsPage).getCssValue("text-decoration-line");
+            System.out.println("--> text style: " + decoration3);
+
+            String size3 = driver.findElement(oldPriceOnDetailsPage).getCssValue("font-size");
+            double sizeInPX3 = fontSizeToDouble(size3);
+
+            //new price
+            System.out.println("Details of the new price:");
+            String color4 = driver.findElement(newPriceOnDetailsPage).getCssValue("color");
+            colorConverter(color4);
+
+            String decoration4 = driver.findElement(newPriceOnDetailsPage).getCssValue("font-weight");
+            boldFonts(decoration4);
+
+            String size4 = driver.findElement(newPriceOnDetailsPage).getCssValue("font-size");
+            double sizeInPX4 = fontSizeToDouble(size4);
+
+            //comparing text sizes
+            if (sizeInPX3 < sizeInPX4) {
+                System.out.println("->> old price font is smaller than new price font");
+            } else {
+                System.out.println("->> old price font is bigger than new price font");
+            }
+            driver.navigate().back();
+            System.out.println("Returned to home page");
+
+        }
+    }
+
+    //color converter method
+    public void colorConverter(String color) {
+
+        String[] numbers = color.replace("rgba(", "").replace(")", "").split(",");
+        int r = Integer.parseInt(numbers[0].trim());
+        int g = Integer.parseInt(numbers[1].trim());
+        int b = Integer.parseInt(numbers[2].trim());
+        //System.out.println("--> price color rgba code is:" + color + "; " + "its parsed code is: "+ "r=" + r + "; " + "g=" + g + " ;" + "b=" + b);
+
+        //getting black
+        if (r <= 51 && r >= 0 && b >= 0 && b <= 120) {
+            System.out.println("--> price color: BLACK");
+        }
+        //getting red
+        else if (b <= 105 && b >= 0 && g >= 0 && g <= 38) {
+            System.out.println("--> price color: RED");
+        } else {
+            System.out.println("--> price color is neither black nor red");
+        }
+    }
+
+    //method converting font size to double
+    public Double fontSizeToDouble(String size) {
+        String s1 = size.replace("px", "");
+        double sizeInPX = Double.parseDouble(s1);
+        System.out.println("--> text size: " + sizeInPX);
+        return sizeInPX;
+    }
+
+    //method checking bold styles
+    public void boldFonts(String decoration) {
+        int d = Integer.parseInt(decoration);
+        if (d >= 700 && d <= 800) {
+            System.out.println("--> text style: bold");
+        } else System.out.println("--> text is not written in bold");
     }
 }
