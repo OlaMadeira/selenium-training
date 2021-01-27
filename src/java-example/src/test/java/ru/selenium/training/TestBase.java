@@ -4,6 +4,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
@@ -16,7 +20,13 @@ public class TestBase {
 
     @Before
     public void start(){
-        driver = new ChromeDriver();
+        //System.setProperty("webdriver.edge.driver", "C:\\windows\\workspace\\msedgedriver.exe");
+        //driver = new ChromeDriver();
+        //driver = new FirefoxDriver();
+        //driver = new EdgeDriver();
+        DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
+        ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+        driver = new InternetExplorerDriver(ieCapabilities);
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, 10);
         //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
