@@ -3,8 +3,10 @@ package ru.selenium.training;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class EnterText extends TestBase {
 
@@ -44,6 +46,16 @@ public class EnterText extends TestBase {
         String s3 = phone.getAttribute("value");
         Assert.assertEquals("+7 (951) 555-66-55", s3);
         System.out.println("The updated phone is:" + s3);
+    }
+
+    @Test
+    public void bigText() {
+        driver.get("https://www.lettercount.com/");
+        WebElement field = driver.findElement(By.name("charcount"));
+        JavascriptExecutor myExecutor = ((JavascriptExecutor) driver);
+        myExecutor.executeScript("arguments[0].value='new super puper long very text!!!!!!!!!!';",field);
+        String s = field.getAttribute("value");
+        System.out.println("this was entered: " +s);
     }
 }
 
