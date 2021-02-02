@@ -21,12 +21,7 @@ public class TestBase {
     @Before
     public void start(){
         //System.setProperty("webdriver.edge.driver", "C:\\windows\\workspace\\msedgedriver.exe");
-        //driver = new ChromeDriver();
-        //driver = new FirefoxDriver();
-        //driver = new EdgeDriver();
-        DesiredCapabilities ieCapabilities = DesiredCapabilities.internetExplorer();
-        ieCapabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-        driver = new InternetExplorerDriver(ieCapabilities);
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, 10);
         //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
