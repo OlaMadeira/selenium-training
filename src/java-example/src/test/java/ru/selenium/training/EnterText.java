@@ -55,6 +55,7 @@ public class EnterText extends TestBase {
         JavascriptExecutor myExecutor = ((JavascriptExecutor) driver);
         myExecutor.executeScript("arguments[0].value='new super puper long very text!!!!!!!!!!';",field);
         String s = field.getAttribute("value");
+        Assert.assertEquals("new super puper long very text!!!!!!!!!!",s);
         System.out.println("this was entered: " +s);
     }
 }
