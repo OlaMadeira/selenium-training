@@ -7,6 +7,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
+
+import java.util.List;
 
 public class EnterText extends TestBase {
 
@@ -58,5 +61,7 @@ public class EnterText extends TestBase {
         Assert.assertEquals("new super puper long very text!!!!!!!!!!",s);
         System.out.println("this was entered: " +s);
     }
-}
+
+    }
+
 

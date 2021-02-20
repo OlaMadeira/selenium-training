@@ -21,7 +21,8 @@ public class TestBase {
     @Before
     public void start(){
         //System.setProperty("webdriver.edge.driver", "C:\\windows\\workspace\\msedgedriver.exe");
-        driver = new ChromeDriver();
+        //driver = new ChromeDriver();
+        driver = new FirefoxDriver();
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, 10);
         //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
