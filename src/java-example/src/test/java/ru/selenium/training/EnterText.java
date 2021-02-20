@@ -60,8 +60,7 @@ public class EnterText extends TestBase {
         String s = field.getAttribute("value");
         Assert.assertEquals("new super puper long very text!!!!!!!!!!",s);
         System.out.println("this was entered: " +s);
-    }
-
+      }
     }
 
 

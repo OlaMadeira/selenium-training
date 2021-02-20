@@ -7,12 +7,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 
+import java.util.List;
+
 public class DnD extends TestBase {
 
     @Test
     //DnD method which does not work in Chrome and half-works in FF
     public void dragNdrop() {
         driver.get("https://jqueryui.com/resources/demos/sortable/connect-lists.html");
+
         //DnD inside list 1
         waitElementsReload(2000);
         WebElement l1item2 = driver.findElement(By.xpath("//body//ul[@id='sortable1']/li[contains(.,'Item 2')]"));
@@ -26,39 +29,54 @@ public class DnD extends TestBase {
         WebElement l2item3 = driver.findElement(By.xpath("//body//ul[@id='sortable2']/li[contains(.,'Item 2')]"));//WHY 2
         actions.dragAndDrop(l1item3, l2item3).perform();
 
-        System.out.println("done");
+        System.out.println("done dnd");
         waitElementsReload(2000);
 
-        //verify that DnD worked correctly - check the 1st list
-
-        int list1size = driver.findElements(By.xpath("//body//ul[@id='sortable1']/li")).size();
-        Assert.assertEquals(4, list1size);
-
-        String a = driver.findElement(By.xpath("//body//ul[@id='sortable1']/li[1]")).getText();
-        Assert.assertEquals("Item 1", a);
-
-        String b = driver.findElement(By.xpath("//body//ul[@id='sortable1']/li[2]")).getText();
-        Assert.assertEquals("Item 4", b);
-
-        String c = driver.findElement(By.xpath("//body//ul[@id='sortable1']/li[3]")).getText();
-        Assert.assertEquals("Item 2", c);
-
-        String d = driver.findElement(By.xpath("//body//ul[@id='sortable1']/li[4]")).getText();
-        Assert.assertEquals("Item 5", d);
-
-        System.out.println("first list be sorted like: "+ a + "; " + b + "; " + c + "; " + d + ";");
-
-
-        /*
+        //verify that DnD worked correctly - check the left list
         List<WebElement> items = driver.findElements(By.xpath("//body//ul[@id='sortable1']/li"));
 
-            for (int i = 0; i < items.size(); i++) {
-            String a = items.get(0).getText();
-            String b = items.get(1).getText();
-            String c = items.get(2).getText();
-            String d = items.get(3).getText();
-            System.out.println("first list be sorted like: " + a + " ;" + b + " ;" + c + " ;" + d + "");
-        } */
+        String a = items.get(0).getText();
+        Assert.assertEquals("Item 1", a);
+
+        String b = items.get(1).getText();
+        Assert.assertEquals("Item 4", b);
+
+        String c = items.get(2).getText();
+        Assert.assertEquals("Item 2", c);
+
+        String d = items.get(3).getText();
+        Assert.assertEquals("Item 5", d);
+
+        System.out.println("left list be sorted like: "+ a + "; " + b + "; " + c + "; " + d + ";");
+
+
+        //verify that DnD worked correctly - check the right list
+        List<WebElement> items2 = driver.findElements(By.xpath("//body//ul[@id='sortable2']/li"));
+
+        String a1 = items2.get(0).getText();
+        Assert.assertEquals("Item 1", a1);
+
+        String b1 = items2.get(1).getText();
+        Assert.assertEquals("Item 2", b1);
+
+        String c1 = items2.get(2).getText();
+        Assert.assertEquals("Item 3", c1);
+
+        //Assert cell 3 is of correct color
+        String c1Color = items2.get(2).getCssValue("background-color");
+        Assert.assertEquals("rgb(246, 246, 246)", c1Color);
+
+        String d1 = items2.get(3).getText();
+        Assert.assertEquals("Item 3", d1);
+
+        String e1 = items2.get(4).getText();
+        Assert.assertEquals("Item 4", e1);
+
+        String f1 = items2.get(5).getText();
+        Assert.assertEquals("Item 5", f1);
+
+        System.out.println("right list be sorted like: "+ a1 + "; " + b1 + "; " + c1 +  " (grey color;)" + " "
+                + d1 + "; " + e1 + "; " + f1);
 
     }
 
@@ -93,7 +111,6 @@ public class DnD extends TestBase {
 
         dragAndDrop2.perform();
         waitElementsReload(2000);
-
 
     }
 }
