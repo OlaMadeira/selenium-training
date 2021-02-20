@@ -26,7 +26,8 @@ public class DnD extends TestBase {
 
         //DnD to list 2
         WebElement l1item3 = driver.findElement(By.xpath("//body//ul[@id='sortable1']/li[contains(.,'Item 3')]"));
-        WebElement l2item3 = driver.findElement(By.xpath("//body//ul[@id='sortable2']/li[contains(.,'Item 2')]"));//WHY 2
+        //CORRECT THE NEXT LINE CAUSE IT'S A HACK!!!!!!!!! ITEM 3 IS PLACED TO WRONG CELL
+        WebElement l2item3 = driver.findElement(By.xpath("//body//ul[@id='sortable2']/li[contains(.,'Item 2')]"));
         actions.dragAndDrop(l1item3, l2item3).perform();
 
         System.out.println("done dnd");
@@ -62,7 +63,7 @@ public class DnD extends TestBase {
         String c1 = items2.get(2).getText();
         Assert.assertEquals("Item 3", c1);
 
-        //Assert cell 3 is of correct color
+        //Assert cell 3 is of correct color (fetched from left list)
         String c1Color = items2.get(2).getCssValue("background-color");
         Assert.assertEquals("rgb(246, 246, 246)", c1Color);
 
