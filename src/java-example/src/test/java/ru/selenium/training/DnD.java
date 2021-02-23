@@ -3,6 +3,7 @@ package ru.selenium.training;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -12,7 +13,7 @@ import java.util.List;
 public class DnD extends TestBase {
 
     @Test
-    //DnD method which does not work in Chrome and half-works in FF
+    //DnD method which does not work in Chrome and works with a hack in FF
     public void dragNdrop() {
         driver.get("https://jqueryui.com/resources/demos/sortable/connect-lists.html");
 
@@ -24,13 +25,9 @@ public class DnD extends TestBase {
         actions.dragAndDrop(l1item2, l1item4).perform();
         waitElementsReload(2000);
 
-        //DnD to list 2
+        //DnD to list 2 - a hack in offset
         WebElement l1item3 = driver.findElement(By.xpath("//body//ul[@id='sortable1']/li[contains(.,'Item 3')]"));
-        //CORRECT THE NEXT LINE CAUSE IT'S A HACK!!!!!!!!! ITEM 3 IS PLACED TO WRONG CELL
-        WebElement l2item3 = driver.findElement(By.xpath("//body//ul[@id='sortable2']/li[contains(.,'Item 2')]"));
-        actions.dragAndDrop(l1item3, l2item3).perform();
-
-        System.out.println("done dnd");
+        actions.dragAndDropBy(l1item3, 167, 30).perform();
         waitElementsReload(2000);
 
         //verify that DnD worked correctly - check the left list
@@ -81,7 +78,7 @@ public class DnD extends TestBase {
 
     }
 
-    //another variant
+    //another variant - still does not work!
     @Test
     public void DnDUgly() {
         driver.get("https://jqueryui.com/resources/demos/sortable/connect-lists.html");
@@ -113,6 +110,17 @@ public class DnD extends TestBase {
         dragAndDrop2.perform();
         waitElementsReload(2000);
 
+    }
+
+    @Test
+    public void getOffset(){
+
+        driver.get("https://jqueryui.com/resources/demos/sortable/connect-lists.html");
+        WebElement l2item3 = driver.findElement(By.xpath("//body//ul[@id='sortable2']/li[contains(.,'Item 2')]"));
+        Point point = l2item3.getLocation();
+        int xcord = point.getX();
+        int ycord = point.getY();
+        System.out.println("x is: "+ xcord + "; y is: " + ycord);
     }
 }
 
