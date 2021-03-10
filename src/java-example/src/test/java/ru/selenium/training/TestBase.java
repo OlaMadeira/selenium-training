@@ -8,9 +8,12 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.alertIsPresent;
 
 
 public class TestBase {
@@ -26,6 +29,8 @@ public class TestBase {
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, 10);
         //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+
     }
 
     boolean areElementsPresent(By locator, int time) {
